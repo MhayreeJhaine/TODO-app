@@ -1,24 +1,53 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
+import "react-native-reanimated";
+import { useEffect } from "react";
+import { ThemeProvider } from "@/hooks/themeContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Feather from "@expo/vector-icons/Feather";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+export {
+  // Catch any errors thrown by the Layout component.
+  ErrorBoundary,
+} from "expo-router";
 
 export const unstable_settings = {
-  anchor: '(tabs)',
+  anchor: "(main)",
 };
 
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+// SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  // const colorScheme = useColorScheme();
+  const [loaded, error] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    JosefinSans: require("../assets/fonts/JosefinSans-Regular.ttf"),
+    ...Feather.font,
+  });
+
+  useEffect(() => {
+    if (error) throw error;
+  }, [error]);
+
+  if (!loaded) {
+    return null;
+  }
+
+  const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <ConvexProvider client={convex}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ThemeProvider>
+          <Stack>
+            <Stack.Screen name="(main)" options={{ headerShown: false }} />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </GestureHandlerRootView>
+    </ConvexProvider>
   );
 }

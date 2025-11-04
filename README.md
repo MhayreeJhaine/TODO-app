@@ -1,50 +1,160 @@
-# Welcome to your Expo app 👋
+# 📝 React Native To-Do App (Expo + Convex)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A beautiful and modern to-do list app built with **Expo (React Native)** and **Convex** as the backend.  
+This app features drag-and-drop task reordering, real-time syncing, gradient-styled check buttons, and smooth theming (light/dark mode).
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+- ✅ Add, toggle, and delete todos in real time
+- 🔄 Drag and drop to reorder tasks
+- 🌈 Gradient check icons using `expo-linear-gradient`
+- ☁️ Backend powered by [Convex](https://convex.dev)
+- 🎨 Light and dark theme support
+- 💾 Persistent backend storage
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🧩 Tech Stack
 
-In the output, you'll find options to open the app in a
+- **Frontend:** Expo + React Native + TypeScript
+- **Styling:** Custom hooks + Tailwind-like global styles
+- **Backend:** Convex (Realtime Database + Functions)
+- **Icons:** Feather via `@expo/vector-icons`
+- **Animations:** `react-native-reanimated` and `react-native-gesture-handler`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🛠️ Setup Instructions
 
-## Get a fresh project
-
-When you're ready, run:
+### 1️⃣ Clone the Repository
 
 ```bash
-npm run reset-project
+git clone https://github.com/yourusername/your-todo-app.git
+cd your-todo-app
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2️⃣ Install Dependencies
 
-## Learn more
+```bash
+npm install
+# or
+yarn install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3️⃣ Configure Environment Variables
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Create a .env file in your project root:
 
-## Join the community
+```bash
+EXPO_PUBLIC_CONVEX_URL=https://your-convex-deployment.convex.cloud
+```
 
-Join our community of developers creating universal apps.
+⚠️ Note:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- If you have both .env and .env.local, Expo prioritizes .env.local.
+
+- To use production Convex, remove or rename .env.local.
+
+### 4️⃣ Convex Setup
+
+```bash
+npx convex dev
+```
+
+- It will open a dashboard link → sign in and set up your project.
+
+```bash
+npx convex init
+```
+
+This will:
+
+- Create a convex/ folder with default schema and function files
+
+- Generate an initial \_generated/api.d.ts
+
+Then, deploy or run locally depending on your workflow 👇🏽
+
+#### 🧪 Local Dev Server
+
+```bash
+npx convex dev
+```
+
+This runs Convex locally on a development endpoint.
+
+#### 🚀 Deploy to Convex Cloud
+
+```bash
+npx convex deploy
+```
+
+After deployment, Convex will print a URL like:
+
+```bash
+https://your-project-name.convex.cloud
+```
+
+Copy that URL and update your .env:
+
+```bash
+EXPO_PUBLIC_CONVEX_URL=https://your-project-name.convex.cloud
+```
+
+### 📦 Build Commands
+
+#### 🧑🏽‍💻 Run the App in Development
+
+```bash
+npx expo start -c
+```
+
+### 🧱 Build for Production
+
+If you’re using EAS (Expo Application Services):
+
+```bash
+npx expo prebuild
+eas build --platform android
+# or
+eas build --platform ios
+```
+
+### 💡 Common Issues
+
+#### ❌ WebSocket closed with code 1006
+
+This usually means:
+
+- Your Convex URL is incorrect or not deployed.
+- Your .env file is being overridden by .env.local.
+- Run npx convex deploy again and update .env.
+
+### 🧠 Developer Notes
+
+- Always clear Expo’s cache after changing .env or dependencies:
+
+```bash
+npx expo start -c
+```
+
+- Convex functions live inside /convex and are automatically reloaded when you run:
+
+```bash
+npx convex dev
+```
+
+- To test API calls or database mutations, use:
+
+```bash
+npx convex dashboard
+```
+
+## 🚀 Demo
+
+You can test the app using any of the links below:
+
+- 📱 **Appetize Demo:** [Open in Appetize](https://appetize.io/app/your-app-id)
+- 📦 **Download APK:** [Download from Google Drive](https://drive.google.com/your-apk-link)
