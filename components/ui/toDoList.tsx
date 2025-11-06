@@ -1,4 +1,4 @@
-import { Text, View, Pressable } from "react-native";
+import { Text, View, Pressable, ActivityIndicator } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import DraggableFlatList, {
   RenderItemParams,
@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import useGlobalStyle from "@/styles/globalStyle";
+import { useMemo } from "react";
 
 type Todo = {
   _id: Id<"todos">;
@@ -21,9 +22,9 @@ type TodoListProps = {
 
 const TodoList = ({ filter }: TodoListProps) => {
   const styles = useGlobalStyle();
-
-  const todos = useQuery(api.todos.get) || [];
-
+  const rawTodos = useQuery(api.todos.get);
+  const todos = useMemo(() => rawTodos || [], [rawTodos]);
+  const isLoading = rawTodos === undefined; // Convex returns undefined initially
   const toggleTodo = useMutation(api.todos.toggle);
   const deleteTodo = useMutation(api.todos.remove);
   const clearCompleted = useMutation(api.todos.clearCompleted);
@@ -75,31 +76,50 @@ const TodoList = ({ filter }: TodoListProps) => {
   );
 
   return (
-    <View style={styles.tDC}>
-      <DraggableFlatList
-        data={filteredTodos}
-        keyExtractor={(item) => item._id}
-        renderItem={renderItem}
-        // onDragEnd={({ data }) => reorderTodos({ todos: data })}
-        onDragEnd={({ data }) => {
-          const reordered = data.map((todo, index) => ({
-            _id: todo._id,
-            order: index,
-          }));
-          reorderTodos({ todos: reordered });
-        }}
-      />
-
-      <View style={styles.lF}>
-        <Text style={[styles.lFT, styles.defaultFont]}>
-          {todos.filter((t) => !t.completed).length} items left
-        </Text>
-        <Pressable onPress={() => clearCompleted()}>
-          <Text style={[styles.clearCompletedText, styles.defaultFont]}>
-            Clear Completed
-          </Text>
-        </Pressable>
-      </View>
+    <View style={[styles.tDC]}>
+      <>
+        {isLoading ? (
+          <>
+            <ActivityIndicator size="large" color="#57DDFF" />
+            <Text
+              style={[
+                styles.defaultFont,
+                { marginTop: 10, color: "#aaa", textAlign: "center" },
+              ]}
+            >
+              Loading tasks...
+            </Text>
+          </>
+        ) : (
+          <DraggableFlatList
+            data={filteredTodos}
+            keyExtractor={(item) => item._id}
+            renderItem={renderItem}
+            onDragEnd={({ data }) => {
+              const reordered = data.map((todo, index) => ({
+                _id: todo._id,
+                order: index,
+              }));
+              reorderTodos({ todos: reordered });
+            }}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 5 }}
+            // List footer
+            ListFooterComponent={
+              <View style={styles.lF}>
+                <Text style={[styles.lFT, styles.defaultFont]}>
+                  {todos.filter((t) => !t.completed).length} items left
+                </Text>
+                <Pressable onPress={() => clearCompleted()}>
+                  <Text style={[styles.clearCompletedText, styles.defaultFont]}>
+                    Clear Completed
+                  </Text>
+                </Pressable>
+              </View>
+            }
+          />
+        )}
+      </>
     </View>
   );
 };

@@ -11,14 +11,12 @@ import TodoFooter from "@/components/ui/toDoFooter";
 const Index = () => {
   const styles = useGlobalStyle();
   const { theme } = useTheme();
-
-  // Filter state (still local)
   const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Background image based on theme */}
+        {/* Background image */}
         <View style={styles.imgContainer}>
           <Image
             source={
@@ -33,14 +31,13 @@ const Index = () => {
         {/* Main content */}
         <View style={styles.content}>
           <Header />
-
-          {/* Add new task (Convex mutation handled internally) */}
           <TodoInput />
 
-          {/* Todo list (real-time Convex query + mutations) */}
-          <TodoList filter={filter} />
+          {/* 👇 Only this section should scroll */}
+          <View style={{ flex: 1 }}>
+            <TodoList filter={filter} />
+          </View>
 
-          {/* Footer with filter buttons */}
           <TodoFooter filter={filter} setFilter={setFilter} />
         </View>
       </View>
