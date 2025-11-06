@@ -8,24 +8,18 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Feather from "@expo/vector-icons/Feather";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+// Catch any errors thrown by the Layout component.
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
   anchor: "(main)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-// SplashScreen.preventAutoHideAsync();
-
 export default function RootLayout() {
-  // const colorScheme = useColorScheme();
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     JosefinSans: require("../assets/fonts/JosefinSans-Regular.ttf"),
-    ...Feather.font,
+    ...Feather.font, // ✅ Preloads Feather font
   });
 
   useEffect(() => {
@@ -36,6 +30,7 @@ export default function RootLayout() {
     return null;
   }
 
+  // Initializing Convex client
   const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
 
   return (
