@@ -12,7 +12,7 @@ const useGlobalStyle = () => {
     safeArea: {
       flex: 1,
       backgroundColor: colors.background,
-      overflow: "hidden",
+      overflowX: "hidden",
     },
 
     container: {
@@ -81,8 +81,7 @@ const useGlobalStyle = () => {
     tDC: {
       backgroundColor: colors.secondary,
       borderRadius: "8@s",
-      marginBottom: "15@s",
-      // flexGrow: 1,
+      marginBottom: "10@s",
     },
 
     tDL: {
