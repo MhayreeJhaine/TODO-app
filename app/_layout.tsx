@@ -19,7 +19,7 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     JosefinSans: require("../assets/fonts/JosefinSans-Regular.ttf"),
-    ...Feather.font, // ✅ Preloads Feather font
+    ...Feather.font, // Preloads Feather font
   });
 
   useEffect(() => {
@@ -31,7 +31,9 @@ export default function RootLayout() {
   }
 
   // Initializing Convex client
-  const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
+  const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
+    unsavedChangesWarning: false,
+  });
 
   return (
     <ConvexProvider client={convex}>
