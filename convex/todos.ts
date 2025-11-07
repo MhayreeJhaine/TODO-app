@@ -2,10 +2,11 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
 // Get all todos (ordered by "order" field)
-export const get = query({
+export const getTodos = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query("todos").collect();
+    const todos = await ctx.db.query("todos").order("desc").collect();
+    return todos;
   },
 });
 

@@ -22,7 +22,7 @@ type TodoListProps = {
 
 const TodoList = ({ filter }: TodoListProps) => {
   const styles = useGlobalStyle();
-  const rawTodos = useQuery(api.todos.get);
+  const rawTodos = useQuery(api.todos.getTodos);
   const todos = useMemo(() => rawTodos || [], [rawTodos]);
   const isLoading = rawTodos === undefined; // Convex returns undefined initially
   const toggleTodo = useMutation(api.todos.toggle);
