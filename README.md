@@ -19,7 +19,6 @@ This app features drag-and-drop task reordering, real-time syncing, gradient-sty
 ## 🧩 Tech Stack
 
 - **Frontend:** Expo + React Native + TypeScript
-- **Styling:** Custom hooks + Tailwind-like global styles
 - **Backend:** Convex (Realtime Database + Functions)
 - **Icons:** Feather via `@expo/vector-icons`
 - **Animations:** `react-native-reanimated` and `react-native-gesture-handler`
@@ -31,7 +30,7 @@ This app features drag-and-drop task reordering, real-time syncing, gradient-sty
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/your-todo-app.git
+git clone https://github.com/MhayreeJhaine/TODO-app.git
 cd your-todo-app
 ```
 
@@ -55,7 +54,7 @@ EXPO_PUBLIC_CONVEX_URL=https://your-convex-deployment.convex.cloud
 
 - If you have both .env and .env.local, Expo prioritizes .env.local.
 
-- To use production Convex, remove or rename .env.local.
+- To use production Convex, remove .env.local.
 
 ### 4️⃣ Convex Setup
 
@@ -156,5 +155,5 @@ npx convex dashboard
 
 You can test the app using any of the links below:
 
-- 📱 **Appetize Demo:** [Open in Appetize](https://appetize.io/app/your-app-id)
-- 📦 **Download APK:** [Download from Google Drive](https://drive.google.com/your-apk-link)
+- 📱 **Google Drive:** [Open Google Drive](https://drive.google.com/drive/folders/1N3csvGOLUO6hnglH0j_YzaGVNhjQYC28?usp=sharing)
+- 📦 **Download APK:** [Download from Google Drive](https://drive.google.com/file/d/1rpgsRpQ9vSppjDdTf3lvZG4EJ6XsuWbc/view?usp=drive_link)
